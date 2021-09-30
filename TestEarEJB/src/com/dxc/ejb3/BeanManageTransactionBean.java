@@ -5,24 +5,29 @@ import javax.ejb.Remote;
 import javax.ejb.Stateful;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
-import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
 
 @Remote(value = BeanManageTransaction.class)
 @Stateful
-@TransactionManagement(value=TransactionManagementType.BEAN)
-public class BeanManageTransactionBean {
+@TransactionManagement(value = TransactionManagementType.BEAN)
+public class BeanManageTransactionBean implements BeanManageTransaction {
 	int counter = 0;
 	@Resource
 	UserTransaction tx;
-	public String hello() throws IllegalStateException, SecurityException, SystemException {
+
+	@Override
+	public String hello() {
 		try {
 			tx.begin();
-			String returnVal = "Bean Manage Transaction"+ (counter++);
+			String returnVal = "Bean Manage Transaction" + (counter++);
 			tx.commit();
 			return returnVal;
-		}catch(Exception ex) {
-			tx.rollback();
+		} catch (Exception ex) {
+			try {
+				tx.rollback();
+			} catch (Exception ee) {
+				ee.printStackTrace();
+			}
 			return "Error";
 		}
 	}
