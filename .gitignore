@@ -1,0 +1,9 @@
+home/TMAP/LT/src/03_business/jLT0E/bin/
+home/TMAP/LT/src/03_business/jST3Batch/bin/
+home/TMAP/LT/src/02_web/wLT0/WebContent/WEB-INF/classes/
+**/build/
+**/.settings/
+*.classpath
+*.bak
+*.class
+**.tern-project
